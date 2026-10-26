@@ -1,0 +1,21 @@
+{
+  "name": "bitacora-cli",
+  "version": "1.0.0",
+  "description": "Una aplicación de consola para llevar un registro de lo que aprendes cada día.",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [
+    "bitacora",
+    "cli",
+    "notas",
+    "estudio"
+  ],
+  "author": "Jonathan",
+  "license": "MIT",
+  "dependencies": {
+    "object-hash": "^3.0.0"
+  }
+}
