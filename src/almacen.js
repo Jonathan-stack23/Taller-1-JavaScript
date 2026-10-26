@@ -2,6 +2,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { getLongTime } from 'fechas-bitacora-jonathan';
 
+/**
+ * Capa de persistencia: encapsula TODO el acceso al sistema de archivos.
+ *
+ * El resto del programa nunca toca fs directamente, sino que lee y escribe
+ * las notas a través de este módulo. Así las rutas de datos, el formato del
+ * JSON y el registro de la bitácora de logs quedan centralizados en un solo lugar.
+ */
+
 const __dirname = import.meta.dirname;
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const NOTAS_PATH = path.join(DATA_DIR, 'notas.json');
@@ -18,7 +26,11 @@ const asegurarCarpetaData = () => {
 
 /**
  * Lee las notas desde el archivo JSON.
- * @returns {Array} Arreglo de notas.
+ *
+ * Si el archivo está dañado devuelve null en lugar de lanzar un error, para
+ * que las funciones de notas.js puedan abortar SIN sobrescribir los datos
+ * del usuario (evita perder información por un JSON mal formado).
+ * @returns {Array|null} Arreglo de notas, o null si el archivo no se pudo leer.
  */
 export const leerNotas = () => {
     asegurarCarpetaData();
