@@ -1,0 +1,13 @@
+{
+  "name": "fechas-bitacora-jonathan",
+  "version": "1.0.0",
+  "description": "Módulo de utilidad para formateo de fechas en bitacora-cli.",
+  "main": "index.js",
+  "keywords": [
+    "fechas",
+    "bitacora",
+    "formateo"
+  ],
+  "author": "Jonathan",
+  "license": "MIT"
+}

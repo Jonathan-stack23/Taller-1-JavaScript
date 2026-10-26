@@ -10,11 +10,11 @@ Una aplicación de consola para llevar un registro de lo que aprendes cada día,
    ```bash
    npm install
    ```
-4. (Opcional) Si el paquete de fechas no está en npm, vinculalo localmente:
+4. (Opcional) Si el paquete de fechas no está en npm, vincúlalo localmente:
    ```bash
-   cd ../fechas-bitacora-jonathan
+   cd fechas-bitacora-jonathan
    npm link
-   cd ../bitacora-cli
+   cd ..
    npm link fechas-bitacora-jonathan
    ```
 
