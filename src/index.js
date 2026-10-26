@@ -1,4 +1,12 @@
 #!/usr/bin/env node
+/**
+ * Punto de entrada de la CLI "bitácora".
+ *
+ * Este archivo solo traduce lo que el usuario escribe en la terminal a
+ * llamadas de la capa de lógica (notas.js); no contiene reglas de negocio.
+ * Así, si mañana se cambia la interfaz (por ejemplo a una web), la lógica
+ * de las notas se reutiliza sin tocar este archivo.
+ */
 import { 
     agregarNota, 
     listarNotas, 
@@ -14,6 +22,8 @@ import {
 // process.argv[2] es el comando
 const [,, comando, ...args] = process.argv;
 
+// El switch funciona como "tabla de comandos": cada caso corresponde a
+// una operación de la bitácora y el default muestra la ayuda.
 switch (comando) {
     case 'agregar':
         agregarNota(args[0], args[1]);
