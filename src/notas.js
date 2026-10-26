@@ -6,6 +6,15 @@ import { leerNotas, guardarNotas, registrarLog, NOTAS_PATH, DATA_DIR } from './a
 import { getTimeStamp, getLongTime, getShortDate } from 'fechas-bitacora-jonathan';
 
 /**
+ * Lógica de negocio de la bitácora.
+ *
+ * Aquí se definen las operaciones sobre las notas (agregar, listar, buscar,
+ * borrar, respaldar y exportar). Delega la lectura/escritura en almacen.js y
+ * el formateo de fechas en el paquete local "fechas-bitacora-jonathan", de
+ * modo que cada responsabilidad vive en un solo módulo.
+ */
+
+/**
  * Agrega una nueva nota.
  * @param {string} texto - Texto de la nota.
  * @param {string} etiqueta - Etiqueta opcional.
@@ -19,6 +28,8 @@ export const agregarNota = (texto, etiqueta = 'general') => {
     const notas = leerNotas();
     if (notas === null) return;
 
+    // El ID se deriva del contenido (hash del texto), así el mismo texto
+    // genera siempre el mismo ID: eso permite detectar notas duplicadas.
     const id = hash(texto).substring(0, 8);
     const notaDuplicada = notas.find(n => n.id === id);
 
@@ -200,14 +211,16 @@ export const exportarNotas = (rutaDestino) => {
     const rutaFinal = path.join(destinoFinal, archivoExportacion);
 
     try {
-        // Intentar mover (renameSync)
+        // Intentar mover (renameSync): es instantáneo cuando origen y destino
+        // están en el mismo disco.
         fs.renameSync(rutaTemporal, rutaFinal);
         const msg = `Notas exportadas y movidas a: ${rutaFinal}`;
         console.log(msg);
         registrarLog('exportar', msg);
     } catch (error) {
         if (error.code === 'EXDEV') {
-            // Si falla por discos distintos, copiar y borrar
+            // EXDEV (cross-device link) ocurre cuando la carpeta destino está
+            // en otro disco; en ese caso renameSync no sirve y se copia y borra.
             fs.copyFileSync(rutaTemporal, rutaFinal);
             fs.unlinkSync(rutaTemporal);
             const msg = `Notas exportadas (vía copia) a: ${rutaFinal}`;
