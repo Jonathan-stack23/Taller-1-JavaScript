@@ -16,6 +16,7 @@
   "author": "Jonathan",
   "license": "MIT",
   "dependencies": {
+    "fechas-bitacora-jonathan": "file:./fechas-bitacora-jonathan",
     "object-hash": "^3.0.0"
   }
 }
